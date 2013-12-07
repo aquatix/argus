@@ -45,29 +45,21 @@ def get_volumes(raw_input):
     for volume in volumes:
         device, size, used, available, percent, mountpoint = \
             volume.split()
-            #raw_input.split("\n")[1].split()
         output[mountpoint] = {'device': device, 'size': size, 'used': used, 'available': available, 'percent': percent, 'mountpoint': mountpoint}
-        #print device, size, used, available, percent, mountpoint
     return output
 
 
-def volume_size(raw_input, volume):
+def volume_available(all_volumes, mount_path):
     """
-    Parse the sizes of storage volume 'volume'
+    Returns available storage of the volume mounted at mount_path in MB
     """
-    device, size, used, available, percent, mountpoint = \
-        raw_input.split("\n")[1].split()
-    output = {'device': device, 'size': size, 'used': used, 'available': available, 'percent': percent, 'mountpoint': mountpoint}
-    print device, size, used, available, percent, mountpoint
-    return output
+    return int(all_volumes[mount_path]['available']) / 1024
 
 
 output = local_command('df')
-print output
 all_volumes = get_volumes(output)
 print all_volumes
-print int(all_volumes['/home/mbscholt/data']['available']) / 1024
-#print get_volumes(output, 'sda')
+print volume_available(all_volumes, '/home/mbscholt/data')
 
 print local_command('ls', '-1')
 print remote_command('127.0.0.1', 'test', 'password', 'ls', '-l')
