@@ -1,6 +1,7 @@
 import paramiko
 import subprocess
 import sys, getopt
+import logging
 
 # The various types of commands argus supports:
 CMD_HEALTH = 'health'
@@ -60,14 +61,37 @@ def volume_available(all_volumes, mount_path):
     """
     Returns available storage of the volume mounted at mount_path in MB
     """
-    return int(all_volumes[mount_path]['available']) / 1024
+    try:
+        return int(all_volumes[mount_path]['available']) / 1024
+    except KeyError:
+        #print "Volume '%s' not found" % mount_path
+        logger = logging.getLogger('commands')
+        logger.error("Volume at mount point '%s' not found" % mount_path)
+        return -1
 
 
 def main(argv):
     command = ''
     arguments = ''
     extra_arguments = ''
-    remotehost = ''
+    remote_host = ''
+
+    # create logger with 'commands'
+    logger = logging.getLogger('commands')
+    logger.setLevel(logging.DEBUG)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler('commands.log')
+    fh.setLevel(logging.DEBUG)
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.ERROR)
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+    # add the handlers to the logger
+    logger.addHandler(fh)
+    logger.addHandler(ch)
 
     try:
         opts, args = getopt.getopt(argv,"hc:a:",["command=","arguments=","health","checkvolume=","rebooted"])
@@ -87,7 +111,7 @@ def main(argv):
             print '  nody.py --checkvolume=<volume>    check the size of a mounted volume on the machine'
             sys.exit()
         elif opt in ("-r", "--remote"):
-            remotehost = arg
+            remote_host = arg
         elif opt in ("-a", "--arguments"):
             extra_arguments = arg
         elif opt in ("--health"):
@@ -97,22 +121,26 @@ def main(argv):
             arguments = arg
         elif opt in ("--rebooted"):
             command = CMD_REBOOTED
+    logger.debug('command "%s", arguments "%s", extra "%s", remotehost "%s"', command, arguments, extra_arguments, remote_host)
     print 'Command to execute is:', command
     print 'Provided arguments:', arguments
     print 'Extra arguments:', extra_arguments
-    print 'Remote host:', remotehost
+    print 'Remote host:', remote_host
 
     if command == CMD_HEALTH:
+        logger.info('health')
         print 'Fetch config from db about what things to check health on'
 
     #print volume_available(all_volumes, '/home/mbscholt/data')
     if command == CMD_CHECKVOLUME:
+        logger.info('checkvolume on %s', arguments)
         output = local_command('df')
         all_volumes = get_volumes(output)
         #print all_volumes
         print volume_available(all_volumes, arguments)
 
     if command == CMD_REBOOTED:
+        logger.info('rebooted')
         print 'Machine rebooted, we should notify someone'
 
     #print local_command('ls', '-1')
