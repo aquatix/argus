@@ -8,10 +8,15 @@ asn1crypto==0.24.0        # via cryptography
 astroid==1.6.4            # via pylint
 bcrypt==3.1.4             # via paramiko
 cffi==1.11.5              # via bcrypt, cryptography, pynacl
+click==6.7                # via flask
 cryptography==2.2.2       # via paramiko
+flask==1.0.2
 idna==2.6                 # via cryptography
 isort==4.3.4              # via pylint
+itsdangerous==0.24        # via flask
+jinja2==2.10              # via flask
 lazy-object-proxy==1.3.1  # via astroid
+markupsafe==1.0           # via jinja2
 mccabe==0.6.1             # via pylint
 paramiko==2.4.1
 pyasn1==0.4.3             # via paramiko
@@ -19,4 +24,5 @@ pycparser==2.18           # via cffi
 pylint==1.9.1
 pynacl==1.2.1             # via paramiko
 six==1.11.0               # via astroid, bcrypt, cryptography, pylint, pynacl
+werkzeug==0.14.1          # via flask
 wrapt==1.10.11            # via astroid

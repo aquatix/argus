@@ -7,10 +7,16 @@
 asn1crypto==0.24.0        # via cryptography
 bcrypt==3.1.4             # via paramiko
 cffi==1.11.5              # via bcrypt, cryptography, pynacl
+click==6.7                # via flask
 cryptography==2.2.2       # via paramiko
+flask==1.0.2
 idna==2.6                 # via cryptography
+itsdangerous==0.24        # via flask
+jinja2==2.10              # via flask
+markupsafe==1.0           # via jinja2
 paramiko==2.4.1
 pyasn1==0.4.3             # via paramiko
 pycparser==2.18           # via cffi
 pynacl==1.2.1             # via paramiko
 six==1.11.0               # via bcrypt, cryptography, pynacl
+werkzeug==0.14.1          # via flask
