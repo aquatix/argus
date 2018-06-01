@@ -10,9 +10,7 @@ CMD_REBOOTED = 'rebooted'
 
 
 def remote_command(hostname, username, password, command, parameters):
-    """
-    Connect over ssh to hostname and execute the command on its shell
-    """
+    """ Connect over ssh to hostname and execute the command on its shell """
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     #ssh.connect('127.0.0.1', username='dev', password='password')
@@ -23,9 +21,7 @@ def remote_command(hostname, username, password, command, parameters):
 
 
 def local_command(command, parameters=None):
-    """
-    Execute a shell command locally
-    """
+    """ Execute a shell command locally """
     #print subprocess.call(["ls", "-l"])
     if parameters != None:
         output = subprocess.Popen([command, parameters],
@@ -37,30 +33,31 @@ def local_command(command, parameters=None):
 
 
 def remote_argus_command(hostname, username, password, command, parameters):
-    """
-    Execute a command through the remote instance of Argus
-    """
+    """ Execute a command through the remote instance of Argus """
     pass
 
 
 def get_volumes(raw_input):
-    """
-    Parse the sizes of storage volume 'volume'
-    """
+    """ Parse the sizes of storage volume 'volume' """
     volumes = raw_input.strip().split("\n")
     volumes.pop(0) # delete the header
     output = {}
     for volume in volumes:
         device, size, used, available, percent, mountpoint = \
             volume.split()
-        output[mountpoint] = {'device': device, 'size': size, 'used': used, 'available': available, 'percent': percent, 'mountpoint': mountpoint}
+        output[mountpoint] = {
+            'device': device,
+            'size': size,
+            'used': used,
+            'available': available,
+            'percent': percent,
+            'mountpoint': mountpoint
+        }
     return output
 
 
 def volume_available(all_volumes, mount_path):
-    """
-    Returns available storage of the volume mounted at mount_path in MB
-    """
+    """ Returns available storage of the volume mounted at mount_path in MB """
     try:
         return int(all_volumes[mount_path]['available']) / 1024
     except KeyError:
@@ -94,42 +91,48 @@ def main(argv):
     logger.addHandler(ch)
 
     try:
-        opts, args = getopt.getopt(argv,"hc:a:",["command=","arguments=","health","checkvolume=","rebooted"])
+        opts, args = getopt.getopt(argv, "hc:a:",["help","command=","arguments=","health","checkvolume=","rebooted"])
     except getopt.GetoptError:
-        print 'node.py --<command> [<arguments>] [-r <remotehost>]'
+        print('node.py --<command> [<arguments>] [-r <remotehost>]')
         sys.exit(2)
     for opt, arg in opts:
-        if opt == '-h':
-            print 'node.py --<command> [<arguments>] [-r <remotehost>]'
-            print
-            print 'Commands:'
-            print '  health         do a generic health check on the configured items'
-            print '  rebooted       the machine has rebooted, notify'
-            print '  checkvolume    check the size of a mounted volume on the machine'
-            print
-            print 'Example:'
-            print '  nody.py --checkvolume=<volume>    check the size of a mounted volume on the machine'
+        if opt in ('-h', '--help'):
+            print('node.py --<command> [<arguments>] [-r <remotehost>]')
+            print()
+            print('Commands:')
+            print('  health         do a generic health check on the configured items')
+            print('  rebooted       the machine has rebooted, notify')
+            print('  checkvolume    check the size of a mounted volume on the machine')
+            print()
+            print('Example:')
+            print('  nody.py --checkvolume=<volume>    check the size of a mounted volume on the machine')
             sys.exit()
         elif opt in ("-r", "--remote"):
             remote_host = arg
         elif opt in ("-a", "--arguments"):
             extra_arguments = arg
-        elif opt in ("--health"):
+        elif opt in ("--health", ):
             command = CMD_HEALTH
         elif opt in ("-cv", "--checkvolume"):
             command = CMD_CHECKVOLUME
             arguments = arg
-        elif opt in ("--rebooted"):
+        elif opt in ("--rebooted", ):
             command = CMD_REBOOTED
-    logger.debug('command "%s", arguments "%s", extra "%s", remotehost "%s"', command, arguments, extra_arguments, remote_host)
-    print 'Command to execute is:', command
-    print 'Provided arguments:', arguments
-    print 'Extra arguments:', extra_arguments
-    print 'Remote host:', remote_host
+    logger.debug(
+        'command "%s", arguments "%s", extra "%s", remotehost "%s"',
+        command,
+        arguments,
+        extra_arguments,
+        remote_host
+    )
+    print('Command to execute is:', command)
+    print('Provided arguments:', arguments)
+    print('Extra arguments:', extra_arguments)
+    print('Remote host:', remote_host)
 
     if command == CMD_HEALTH:
         logger.info('health')
-        print 'Fetch config from db about what things to check health on'
+        print('Fetch config from db about what things to check health on')
 
     #print volume_available(all_volumes, '/home/mbscholt/data')
     if command == CMD_CHECKVOLUME:
@@ -137,11 +140,11 @@ def main(argv):
         output = local_command('df')
         all_volumes = get_volumes(output)
         #print all_volumes
-        print volume_available(all_volumes, arguments)
+        print(volume_available(all_volumes, arguments))
 
     if command == CMD_REBOOTED:
         logger.info('rebooted')
-        print 'Machine rebooted, we should notify someone'
+        print('Machine rebooted, we should notify someone')
 
     #print local_command('ls', '-1')
     #print remote_command('127.0.0.1', 'test', 'password', 'ls', '-l')
