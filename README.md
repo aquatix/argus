@@ -5,7 +5,11 @@ Website/server monitoring tool
 
 ## Installation
 
-Easiest way is to create a virtualenv and do a
+Some system packages are needed. On a system with apt, do:
+
+    sudo apt install python-dev libcrypt-dev libffi-dev openssl-dev
+
+Easiest way then is to create a virtualenv and do a
 
     pip install -r requirements.txt
 
