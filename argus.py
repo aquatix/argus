@@ -10,8 +10,16 @@
 """
 
 from sqlite3 import dbapi2 as sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash, _app_ctx_stack
+
+import click
+from flask import (Flask, _app_ctx_stack, abort, flash, g, redirect,
+                   render_template, request, session, url_for)
+
+import settings
+from modules import diskspacealarm, network, pushover
+
+# get hostname for the current node
+HOSTNAME = network.get_local_hostname()
 
 # configuration
 DATABASE = '/tmp/flaskr.db'
@@ -98,6 +106,29 @@ def logout():
     return redirect(url_for('show_entries'))
 
 
+## Main program
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
+def check_diskspace():
+    diskspacealarm.check_diskspace(settings, HOSTNAME)
+
+
+@cli.command()
+def rebooted():
+    """Sends a message about the node having rebooted"""
+    message = '[{}] Node has been rebooted. Local IP is {}, public IP is {}'.format(
+        HOSTNAME,
+        network.get_local_ip(),
+        network.get_public_ip()
+    )
+    pushover.send_message(settings, message)
+
+
 if __name__ == '__main__':
-    init_db()
+    #init_db()
+    cli()
     app.run()
