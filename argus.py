@@ -5,7 +5,7 @@
 
     A monitoring tool
 
-    :copyright: (c) 2013 by Michiel Scholten.
+    :copyright: (c) 2013-2018 by Michiel Scholten.
     :license: BSD, see LICENSE for more details.
 """
 
@@ -101,4 +101,3 @@ def logout():
 if __name__ == '__main__':
     init_db()
     app.run()
-
