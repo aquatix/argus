@@ -128,6 +128,18 @@ def rebooted():
     pushover.send_message(settings, message)
 
 
+@cli.command()
+def node_info():
+    print('Node {}\nLocal IP is {}\nPublic IP is {}\n'.format(
+        HOSTNAME,
+        network.get_local_ip(),
+        network.get_public_ip()
+    ))
+    diskspace_info  = diskspacealarm.check_diskspace(settings, HOSTNAME)
+    if diskspace_info:
+        print(diskspace_info)
+
+
 if __name__ == '__main__':
     #init_db()
     cli()
