@@ -114,7 +114,9 @@ def cli():
 
 @cli.command()
 def check_diskspace():
-    diskspacealarm.check_diskspace(settings, HOSTNAME)
+    diskspace_info = diskspacealarm.check_diskspace(settings, HOSTNAME)
+    if diskspace_info:
+        pushover.send_message(settings, diskspace_info[1], title=diskspace_info[0])
 
 
 @cli.command()
@@ -125,7 +127,7 @@ def rebooted():
         network.get_local_ip(),
         network.get_public_ip()
     )
-    pushover.send_message(settings, message)
+    pushover.send_message(settings, message, title="Node has rebooted")
 
 
 @cli.command()
@@ -137,7 +139,7 @@ def node_info():
     ))
     diskspace_info  = diskspacealarm.check_diskspace(settings, HOSTNAME)
     if diskspace_info:
-        print(diskspace_info)
+        print(diskspace_info[1])
 
 
 if __name__ == '__main__':

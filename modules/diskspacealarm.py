@@ -19,7 +19,7 @@ def check_diskspace(settings, hostname):
     try:
         filesystems = settings.FILESYSTEMS[hostname]
     except KeyError:
-        return '[spacealarm] No filesystem configuration found for {}'.format(hostname)
+        return ('Error during diskspace check', '[spacealarm] No filesystem configuration found for {}'.format(hostname))
 
     messages = []
 
@@ -35,4 +35,4 @@ def check_diskspace(settings, hostname):
             messages.append('{}: {:.1f}MB free'.format(filesystem[0], statvfs.f_frsize * statvfs.f_bavail / 1024/1024))
 
     if messages:
-        return format_lowdisk_message(messages, hostname)
+        return ('Diskspace warning', format_lowdisk_message(messages, hostname))
