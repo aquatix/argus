@@ -8,6 +8,6 @@ fi
 
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-cd "${SCRIPDIR}"
+cd "${SCRIPTDIR}"
 
 python argus.py "$@"
