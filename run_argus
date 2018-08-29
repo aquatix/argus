@@ -2,7 +2,7 @@
 
 if [[ -z "$VIRTUAL_ENV" ]]; then
     # Only activate the virtualenv if we aren't in one already
-    source $(which virtualenvwrapper.sh)
+    source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
     workon argus
 fi
 
