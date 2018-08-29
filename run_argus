@@ -6,4 +6,8 @@ if [[ -z "$VIRTUAL_ENV" ]]; then
     workon argus
 fi
 
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+cd "${SCRIPDIR}"
+
 python argus.py "$@"
