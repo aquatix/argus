@@ -1,2 +1,11 @@
+# API
 flask
+
+# Remote SSH connections
 paramiko
+
+# S.M.A.R.T. status
+pysmart.smartx
+
+# Output
+tabulate
