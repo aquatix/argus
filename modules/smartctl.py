@@ -29,14 +29,6 @@ def get_drive_reallocated_sectors(drive):
     return get_smart_attribute(drive, 'Reallocated_Sector_Ct')
 
 
-def display_drive_information(devlist):
-    header = ['Name', 'Health', 'Model', 'Serial', 'Capacity', 'Temperature', 'Age (on)', 'Reallocated Sectors']
-    data = []
-    for device in devlist.devices:
-        data.append(get_drive_information(device))
-    return header, data
-
-
 def get_drive_information(drive):
     temp = get_drive_temperature(drive)
     age = get_drive_age(drive)
@@ -45,9 +37,32 @@ def get_drive_information(drive):
     return data
 
 
+def get_information_on_drives(devlist):
+    header = ['Name', 'Health', 'Model', 'Serial', 'Capacity', 'Temperature', 'Age (on)', 'Reallocated Sectors']
+    data = []
+    for device in devlist.devices:
+        data.append(get_drive_information(device))
+    return header, data
+
+
+def get_devices():
+    return pySMART.DeviceList()
+
+
+def format_drive_info(header, drive_info):
+    return '{} has health status: {}\nModel: {}, {}, {} reallocated sectors.\nIts age is {} years.'.format(
+        drive_info[header.index('Name')],
+        drive_info[header.index('Health')],
+        drive_info[header.index('Model')],
+        drive_info[header.index('Temperature')],
+        drive_info[header.index('Reallocated Sectors')],
+        drive_info[header.index('Age (on)')].strip()
+    )
+
+
 def main():
-    devlist = pySMART.DeviceList()
-    header, data = display_drive_information(devlist)
+    devlist = get_devices()
+    header, data = get_information_on_drives(devlist)
     print(tabulate.tabulate(data, header, 'rst'))
 
 if __name__ == "__main__":

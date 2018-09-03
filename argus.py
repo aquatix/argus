@@ -15,8 +15,9 @@ import click
 from flask import (Flask, _app_ctx_stack, abort, flash, g, redirect,
                    render_template, request, session, url_for)
 
+import tabulate
 import settings
-from modules import diskspacealarm, network, pushover
+from modules import diskspacealarm, network, pushover, smartctl
 
 # get hostname for the current node
 HOSTNAME = network.get_local_hostname()
@@ -131,6 +132,19 @@ def rebooted():
 
 
 @cli.command()
+def smartinfo():
+    """Checks disks on health status"""
+    devices = smartctl.get_devices()
+    header, data = smartctl.get_information_on_drives(devices)
+    for device in data:
+        if device[header.index('Health')] != 'PASS':
+            # There's something wrong with 'Health'
+            message = smartctl.format_drive_info(header, device)
+            # TODO: log this entry
+            pushover.send_message(settings, message, title='[{}] Drive health warning'.format(HOSTNAME))
+
+
+@cli.command()
 def node_info():
     print('Node {}\nLocal IP is {}\nPublic IP is {}\n'.format(
         HOSTNAME,
@@ -140,6 +154,11 @@ def node_info():
     diskspace_info  = diskspacealarm.check_diskspace(settings, HOSTNAME)
     if diskspace_info:
         print(diskspace_info[1])
+
+    # S.M.A.R.T. drive info
+    devices = smartctl.get_devices()
+    header, data = smartctl.get_information_on_drives(devices)
+    print(tabulate.tabulate(data, header, 'rst'))
 
 
 if __name__ == '__main__':
