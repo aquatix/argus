@@ -50,7 +50,7 @@ def get_devices():
 
 
 def format_drive_info(header, drive_info):
-    return '{} has health status: {}\nModel: {}, {}, {} reallocated sectors.\nIts age is {} years.'.format(
+    return '{} has health status: {}\nModel: {}\nTemperature: {}, {} reallocated sectors.\nIts age is {} years.'.format(
         drive_info[header.index('Name')],
         drive_info[header.index('Health')],
         drive_info[header.index('Model')],
