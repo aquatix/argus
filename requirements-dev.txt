@@ -5,13 +5,13 @@
 #    pip-compile --output-file requirements-dev.txt requirements-dev.in
 #
 asn1crypto==0.24.0        # via cryptography
-astroid==2.0.4            # via pylint
-bcrypt==3.1.4             # via paramiko
+astroid==2.1.0            # via pylint
+bcrypt==3.1.5             # via paramiko
 cffi==1.11.5              # via bcrypt, cryptography, pynacl
 click==7.0                # via flask
-cryptography==2.4.1       # via paramiko
+cryptography==2.4.2       # via paramiko
 flask==1.0.2
-idna==2.7                 # via cryptography
+idna==2.8                 # via cryptography
 isort==4.3.4              # via pylint
 itsdangerous==1.1.0       # via flask
 jinja2==2.10              # via flask
@@ -21,10 +21,11 @@ mccabe==0.6.1             # via pylint
 paramiko==2.4.2
 pyasn1==0.4.4             # via paramiko
 pycparser==2.19           # via cffi
-pylint==2.1.1
+pylint==2.2.2
 pynacl==1.3.0             # via paramiko
 pysmart.smartx==0.3.9
-six==1.11.0               # via astroid, bcrypt, cryptography, pynacl
+six==1.12.0               # via astroid, bcrypt, cryptography, pynacl
 tabulate==0.8.2
+typed-ast==1.1.0          # via astroid
 werkzeug==0.14.1          # via flask
 wrapt==1.10.11            # via astroid
