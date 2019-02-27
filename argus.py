@@ -12,12 +12,12 @@
 from sqlite3 import dbapi2 as sqlite3
 
 import click
+import tabulate
 from flask import (Flask, _app_ctx_stack, abort, flash, g, redirect,
                    render_template, request, session, url_for)
 
-import tabulate
 import settings
-from modules import diskspacealarm, network, pushover, smartctl
+from modules import diskspacealarm, network, pushover, smartctl, telegram
 
 # get hostname for the current node
 HOSTNAME = network.get_local_hostname()
