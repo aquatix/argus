@@ -132,6 +132,14 @@ def rebooted():
 
 
 @cli.command()
+@click.argument('message')
+def send_message(message):
+    """Sends a message"""
+    title = '[{}] Message'.format(HOSTNAME)
+    pushover.send_message(settings, message, title)
+
+
+@cli.command()
 def smartinfo():
     """Checks disks on health status"""
     devices = smartctl.get_devices()
