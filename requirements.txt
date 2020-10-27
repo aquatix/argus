@@ -7,7 +7,7 @@
 bcrypt==3.2.0             # via paramiko
 cffi==1.14.2              # via bcrypt, cryptography, pynacl
 click==7.1.2              # via flask
-cryptography==3.0         # via paramiko
+cryptography==3.2         # via paramiko
 flask==1.1.2              # via -r requirements.in
 itsdangerous==1.1.0       # via flask
 jinja2==2.11.2            # via flask

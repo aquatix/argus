@@ -8,7 +8,7 @@ astroid==2.4.2            # via pylint
 bcrypt==3.2.0             # via paramiko
 cffi==1.14.2              # via bcrypt, cryptography, pynacl
 click==7.1.2              # via flask
-cryptography==3.0         # via paramiko
+cryptography==3.2         # via paramiko
 flask==1.1.2              # via -r requirements.in
 isort==4.3.21             # via pylint
 itsdangerous==1.1.0       # via flask
