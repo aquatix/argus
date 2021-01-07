@@ -4,18 +4,39 @@
 #
 #    pip-compile requirements.in
 #
-bcrypt==3.2.0             # via paramiko
-cffi==1.14.2              # via bcrypt, cryptography, pynacl
-click==7.1.2              # via flask
-cryptography==3.0         # via paramiko
-flask==1.1.2              # via -r requirements.in
-itsdangerous==1.1.0       # via flask
-jinja2==2.11.2            # via flask
-markupsafe==1.1.1         # via jinja2
-paramiko==2.7.1           # via -r requirements.in
-pycparser==2.20           # via cffi
-pynacl==1.4.0             # via paramiko
-pysmart.smartx==0.3.10    # via -r requirements.in
-six==1.15.0               # via bcrypt, cryptography, pynacl
-tabulate==0.8.7           # via -r requirements.in
-werkzeug==1.0.1           # via flask
+bcrypt==3.2.0
+    # via paramiko
+cffi==1.14.4
+    # via
+    #   bcrypt
+    #   cryptography
+    #   pynacl
+click==7.1.2
+    # via flask
+cryptography==3.3.1
+    # via paramiko
+flask==1.1.2
+    # via -r requirements.in
+itsdangerous==1.1.0
+    # via flask
+jinja2==2.11.2
+    # via flask
+markupsafe==1.1.1
+    # via jinja2
+paramiko==2.7.2
+    # via -r requirements.in
+pycparser==2.20
+    # via cffi
+pynacl==1.4.0
+    # via paramiko
+pysmart.smartx==0.3.10
+    # via -r requirements.in
+six==1.15.0
+    # via
+    #   bcrypt
+    #   cryptography
+    #   pynacl
+tabulate==0.8.7
+    # via -r requirements.in
+werkzeug==1.0.1
+    # via flask
