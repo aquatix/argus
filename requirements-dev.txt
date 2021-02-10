@@ -15,7 +15,7 @@ cffi==1.14.4
     #   pynacl
 click==7.1.2
     # via flask
-cryptography==3.3.1
+cryptography==3.3.2
     # via paramiko
 flask==1.1.2
     # via -r requirements.in
