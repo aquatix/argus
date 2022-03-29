@@ -31,7 +31,7 @@ markupsafe==2.0.1
     # via jinja2
 mccabe==0.6.1
     # via pylint
-paramiko==2.7.2
+paramiko==2.10.1
     # via -r requirements.in
 pycparser==2.20
     # via cffi
@@ -39,11 +39,12 @@ pylint==2.9.3
     # via -r requirements-dev.in
 pynacl==1.4.0
     # via paramiko
-pysmart.smartx==0.3.10
+pysmart-smartx==0.3.10
     # via -r requirements.in
 six==1.16.0
     # via
     #   bcrypt
+    #   paramiko
     #   pynacl
 tabulate==0.8.9
     # via -r requirements.in
