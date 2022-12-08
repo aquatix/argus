@@ -1,6 +1,3 @@
-# API
-flask
-
 # Remote SSH connections
 paramiko
 
