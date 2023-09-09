@@ -37,7 +37,7 @@ def rebooted():
     """Sends a message about the node having rebooted"""
     message = (
         f'[{HOSTNAME}] Node has been rebooted. '
-        + 'Local IP is {network.get_local_ip()}, public IP is {network.get_public_ip()}'
+        + f'Local IP is {network.get_local_ip()}, public IP is {network.get_public_ip()}'
     )
     pushover.send_message(settings, message, title="Node has rebooted")
 
