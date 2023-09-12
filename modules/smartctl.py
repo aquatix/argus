@@ -21,7 +21,11 @@ def get_drive_age(drive):
 def get_drive_temperature(drive):
     temp = get_smart_attribute(drive, 'Temperature_Celsius')
     if temp:
-        temp = str(temp) + "C"
+        temp = f'{temp}C'
+    else:
+        temp = get_smart_attribute(drive, 'Airflow_Temperature_Cel')
+        if temp:
+            temp = f'{temp}C'
     return temp
 
 
