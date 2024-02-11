@@ -24,7 +24,7 @@ lazy-object-proxy==1.9.0
     # via astroid
 mccabe==0.7.0
     # via pylint
-paramiko==3.3.1
+paramiko==3.4.0
     # via -r requirements.in
 platformdirs==3.10.0
     # via pylint
