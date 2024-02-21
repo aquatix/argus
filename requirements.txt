@@ -10,7 +10,7 @@ cffi==1.15.1
     # via
     #   cryptography
     #   pynacl
-cryptography==42.0.2
+cryptography==42.0.4
     # via paramiko
 paramiko==3.4.0
     # via -r requirements.in
