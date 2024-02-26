@@ -4,13 +4,13 @@
 #
 #    pip-compile --strip-extras requirements.in
 #
-bcrypt==4.0.1
+bcrypt==4.1.2
     # via paramiko
-cffi==1.15.1
+cffi==1.16.0
     # via
     #   cryptography
     #   pynacl
-cryptography==42.0.4
+cryptography==42.0.5
     # via paramiko
 paramiko==3.4.0
     # via -r requirements.in
