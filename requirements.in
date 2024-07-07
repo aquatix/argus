@@ -1,3 +1,6 @@
+# CLI options
+click
+
 # Remote SSH connections
 paramiko
 
