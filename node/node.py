@@ -1,6 +1,7 @@
 import paramiko
 import subprocess
-import sys, getopt
+import sys
+import getopt
 import logging
 
 # The various types of commands argus supports:
@@ -10,7 +11,7 @@ CMD_REBOOTED = 'rebooted'
 
 
 def remote_command(hostname, username, password, command, parameters):
-    """ Connect over ssh to hostname and execute the command on its shell """
+    """Connect over ssh to hostname and execute the command on its shell."""
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     #ssh.connect('127.0.0.1', username='dev', password='password')
@@ -21,9 +22,9 @@ def remote_command(hostname, username, password, command, parameters):
 
 
 def local_command(command, parameters=None):
-    """ Execute a shell command locally """
+    """Execute a shell command locally."""
     #print subprocess.call(["ls", "-l"])
-    if parameters != None:
+    if parameters is not None:
         output = subprocess.Popen([command, parameters],
                                   stdout=subprocess.PIPE).communicate()[0]
     else:
@@ -33,12 +34,12 @@ def local_command(command, parameters=None):
 
 
 def remote_argus_command(hostname, username, password, command, parameters):
-    """ Execute a command through the remote instance of Argus """
+    """Execute a command through the remote instance of Argus."""
     pass
 
 
 def get_volumes(raw_input):
-    """ Parse the sizes of storage volume 'volume' """
+    """Parse the sizes of storage volume 'volume'."""
     volumes = raw_input.strip().split("\n")
     volumes.pop(0) # delete the header
     output = {}
@@ -57,7 +58,7 @@ def get_volumes(raw_input):
 
 
 def volume_available(all_volumes, mount_path):
-    """ Returns available storage of the volume mounted at mount_path in MB """
+    """Return available storage of the volume mounted at mount_path in MB."""
     try:
         return int(all_volumes[mount_path]['available']) / 1024
     except KeyError:
@@ -68,6 +69,7 @@ def volume_available(all_volumes, mount_path):
 
 
 def main(argv):
+    """Execute the main application."""
     command = ''
     arguments = ''
     extra_arguments = ''

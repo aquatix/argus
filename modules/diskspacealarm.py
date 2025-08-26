@@ -2,11 +2,13 @@ import os
 
 
 def needs_notifying(size_trigger, size_available):
-    """Checks whether we need to send a notification
+    """Checks whether we need to send a notification.
 
     Args:
+    ----
     size_trigger: minimum amount of free space in GB
     size_available: currently available free space in bytes
+
     """
     return size_available <= (size_trigger * 1024*1024*1024)
 

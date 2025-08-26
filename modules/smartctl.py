@@ -1,4 +1,4 @@
-"""Read S.M.A.R.T. disk information and raise alarms where needed"""
+"""Read S.M.A.R.T. disk information and raise alarms where needed."""
 import pySMART
 import tabulate
 
